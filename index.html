@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>これさえ知れば国がわかるGeoGuessr攻略 基礎編</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function (d) {
+        var config = {
+            kitId: "egm1zbp",
+            scriptTimeout: 3000,
+            async: true,
+          },
+          h = d.documentElement,
+          t = setTimeout(function () {
+            h.className =
+              h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+          }, config.scriptTimeout),
+          tk = d.createElement("script"),
+          f = false,
+          s = d.getElementsByTagName("script")[0],
+          a;
+        h.className += " wf-loading";
+        tk.src = "https://use.typekit.net/" + config.kitId + ".js";
+        tk.async = true;
+        tk.onload = tk.onreadystatechange = function () {
+          a = this.readyState;
+          if (f || (a && a != "complete" && a != "loaded")) return;
+          f = true;
+          clearTimeout(t);
+          try {
+            Typekit.load(config);
+          } catch (e) {}
+        };
+        s.parentNode.insertBefore(tk, s);
+      })(document);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <style>
+      bod:not(.top) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vh;
+        margin: 0;
+        width: 80%; /* コンテンツの幅を調整 */
+        max-width: 500px; /* 最大幅を設定 */
+        text-align: center; /* テキストを中央揃え */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="top">
+      <h1 class="heading04">これさえ知れば国がわかる！</h1>
+      <h2 name="kiso">GeoGuessr攻略 基礎編</h2>
+      <!-- <p>このサイトでは、国を特定する際に役立つものや、地域による違いを解説していきます。<br>
+  </p> -->
+    </div>
+    <div class="main">
+      <div class="screen">
+        <div class="hiduke">
+          <p>2024年6月27日</p>
+        </div>
+        <div>
+          <p id="syoukai">
+            突然ですが皆さんは<a
+              href="https://www.geoguessr.com/ja"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="syoukai"
+              ><strong>GeoGuessr</strong></a
+            >というゲームを知っていますか？<br />
+            Googleのストリートビューでランダムな場所に飛ばされ、現在位置を特定するというゲームです。
+            <br /><br />
+            このサイトでは、国を特定する際に役立つものを紹介していきます。
+          </p>
+        </div>
+        <!-- <div class="toc-002">
+          <div>目次</div>
+          <ol>
+            <li><a href="#number">ナンバープレート</a></li>
+            <ol>
+              <li><a href="#fnumber">フランスのナンバープレート</a></li>
+              <li><a href="#unumber">イギリスのナンバープレート</a></li>
+              <li><a href="#anumber">アルゼンチンのナンバープレート</a></li>
+            </ol>
+            <li><a href="#den">電柱</a></li>
+            <ol>
+              <li><a href="#rdentyu">ルーマニアの電柱</a></li>
+              <li><a href="#cdentyu">チリの電柱</a></li>
+              <li><a href="#mdentyu">メキシコの電柱</a></li>
+            </ol>
+            <li><a href="#bora-do">ボラード</a></li>
+            <ol>
+              <li><a href="#csbora">チェコ、スロバキアのボラード</a></li>
+              <li><a href="#fbora">フランスのボラード</a></li>
+              <li><a href="#ibora">アイスランドのボラード</a></li>
+            </ol>
+            <li><a href="#domein">ドメイン</a></li>
+            <ol>
+              <li><a href="#pl">ポーランドのドメイン</a></li>
+              <li><a href="#hu">ハンガリーのドメイン</a></li>
+              <li><a href="#sg">シンガポールのドメイン</a></li>
+            </ol>
+            <li><a href="#tips">Tips</a></li>
+            <li><a href="#saigoni">最後に</a></li>
+          </ol>
+        </div> -->
+        <div class="toc-002">
+          <div>
+            目次
+            <label id="check"><input type="checkbox" /></label>
+          </div>
+          <ol>
+            <li><a href="#number">ナンバープレート</a></li>
+            <ol>
+              <li><a href="#fnumber">フランスのナンバープレート</a></li>
+              <li><a href="#unumber">イギリスのナンバープレート</a></li>
+              <li><a href="#anumber">アルゼンチンのナンバープレート</a></li>
+            </ol>
+            <li><a href="#den">電柱</a></li>
+            <ol>
+              <li><a href="#rdentyu">ルーマニアの電柱</a></li>
+              <li><a href="#cdentyu">チリの電柱</a></li>
+              <li><a href="#mdentyu">メキシコの電柱</a></li>
+            </ol>
+            <li><a href="#bora-do">ボラード</a></li>
+            <ol>
+              <li><a href="#csbora">チェコ、スロバキアのボラード</a></li>
+              <li><a href="#fbora">フランスのボラード</a></li>
+              <li><a href="#ibora">アイスランドのボラード</a></li>
+            </ol>
+            <li><a href="#domein">ドメイン</a></li>
+            <ol>
+              <li><a href="#pl">ポーランドのドメイン</a></li>
+              <li><a href="#hu">ハンガリーのドメイン</a></li>
+              <li><a href="#sg">シンガポールのドメイン</a></li>
+            </ol>
+            <li><a href="#tips">Tips</a></li>
+            <li><a href="#saigoni">最後に</a></li>
+          </ol>
+        </div>
+        <div class="wrapper">
+          <!-- <p>このサイトでは、国を特定する際に役立つものや、地域による違いを解説していきます。<br>
+    まず最初に、特定に役立つ特徴を大まかに紹介していきたいと思います。</p> -->
+
+          <a id="number">
+            <h1 class="container">ナンバープレート</h1>
+          </a>
+          <p>
+            国ごとに<strong>ナンバープレートの形や色</strong>が違います。<br />
+            <br />
+            国を特定する際にとても有用なので、少しずつ覚えていきましょう！
+          </p>
+
+          <a id="fnumber">
+            <h3>フランスのナンバープレート&#9660;</h3>
+          </a>
+          <!-- <img src="image/image1.png"> -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719309182991!6m8!1m7!1suC0dqkugOabyYRqZTT9Kdg!2m2!1d48.76419202099478!2d2.680001459622328!3f215.46410971207874!4f-18.55436889303789!5f3.26878063728198"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            モザイク越しで少し分かりづらいですが、<strong>ナンバープレートの左右に青いストライプ</strong>があります。
+            イタリアのものと似ていますが、イタリアのナンバープレートは横に短いため区別ができます。
+          </p>
+
+          <a id="unumber">
+            <h3>イギリスのナンバープレート&#9660;</h3>
+          </a>
+          <!-- <img src="image/image2.png">
+<img src="image/image3.png"> -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719309235676!6m8!1m7!1sQ6zbVfoOwn2he9mZCUxXwA!2m2!1d52.50139501779355!2d-1.831668576768113!3f140.36418921510705!4f-6.169150938520133!5f3.3203883453544605"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p><strong>前が白で後ろ側が黄色</strong>になっています。</p>
+
+          <a id="anumber">
+            <h3>アルゼンチンのナンバープレート&#9660;</h3>
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719473960158!6m8!1m7!1shYQagIXimFhn7PitOOoKLg!2m2!1d-34.61623497216853!2d-58.40278175054608!3f138.52880531091552!4f-26.514277731315474!5f3.325193203789971"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            ナンバープレートの<strong>中心に黒い点</strong>があります。<br />
+            <br />
+            このように特定の国にしか存在しないナンバープレートもあるので、知っておくだけでかなり特定がしやすくなりますね！
+          </p>
+
+          <a id="den">
+            <h1 class="container">電柱</h1>
+          </a>
+          <p>
+            <strong>電柱の形、材質、コイルの巻き数</strong
+            >などで国や地域を絞れます。
+          </p>
+
+          <a id="rdentyu">
+            <h3>ルーマニアの電柱&#9660;</h3>
+          </a>
+          <!-- <img src="image/image4.png" name="dentyu"> -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719309726165!6m8!1m7!1sVEJmw_PpQkKFcHJ0V4TZKA!2m2!1d45.22684374757686!2d27.43661585615334!3f262.69441555576674!4f4.583240750031223!5f3.1621041571984714"
+            width="600"
+            height="700"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>はしご型になっていて、下が白く塗られています。</p>
+
+          <a id="cdentyu">
+            <h3>チリの電柱&#9660;</h3>
+          </a>
+          <!-- <img src="image/image5.png" name="dentyu"> -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719310068180!6m8!1m7!1spfx_kZ0XqkUV6qzb0OWCWQ!2m2!1d-32.44699078848235!2d-71.2297146413239!3f242.51511611141055!4f3.9001982400985895!5f3.325193203789971"
+            width="600"
+            height="700"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            こちらもはしご型に似ていて窪んでいますが、穴が空いていなくて仕切りもありません。
+          </p>
+
+          <a id="mdentyu">
+            <h3>メキシコの電柱&#9660;</h3>
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719366112230!6m8!1m7!1sJHzj2heUnJAhh2cEb-NWyg!2m2!1d30.67415282187071!2d-109.9842809776568!3f150.1583745102429!4f-1.7792460859278947!5f2.887589146511197"
+            width="600"
+            height="700"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            よく見ると<strong>8角形</strong>になっています。これは比較的覚えやすいですね！
+          </p>
+
+          <a id="bora-do"><h1 class="container">ボラード</h1></a>
+          <p>道路脇によくあるボラードから国を特定することができます。</p>
+
+          <a id="csbora">
+            <h3>チェコ、スロバキアのボラード&#9660;</h3>
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719313433566!6m8!1m7!1si3EyZtxwd1r_7t1I5m4XlQ!2m2!1d49.13044627217829!2d14.60845563971418!3f66.23103041985233!4f-16.201355245665084!5f3.325193203789971"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            <strong>オレンジ色のリフレクター</strong
+            >で、真ん中に線が入っています。<br /><br />
+            ※チェコとスロバキアは同じボラードを使用しているので気をつけましょう。
+          </p>
+
+          <a id="fbora">
+            <h3>フランスのボラード&#9660;</h3>
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719370309562!6m8!1m7!1sKHa7JHRQWYLyMCQXM3_97g!2m2!1d44.44864303361556!2d1.182200053858478!3f20.143089656567923!4f-24.15587873200147!5f3.325193203789971"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>円形で上が尖っていて、赤いリフレクターが巻かれています。</p>
+
+          <a id="ibora">
+            <h3>アイスランドのボラード&#9660;</h3>
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719370687693!6m8!1m7!1sQfvPJyzsXq_7KIC58lajhg!2m2!1d64.11661789146717!2d-21.4826767707386!3f288.25269146119666!4f-31.98632397400099!5f3.325193203789971"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>全体が黄色で白いリフレクターです。</p>
+
+          <a id="domein">
+            <h1 class="container">ドメイン</h1>
+            <p>
+              国別ドメインでは国名の頭文字などが使用されているため、ドメインを見つけてしまえば<br /><strong
+                >ほぼ確定で国が特定</strong
+              >できます。
+            </p>
+
+            <a id="pl">
+              <h3>ポーランドのドメイン .pl &#9660;</h3>
+            </a>
+
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!4v1719372910264!6m8!1m7!1srMrzORweGUWk2vOZbg2bHw!2m2!1d52.23138125651548!2d21.01093291279912!3f58.406207615953754!4f21.291832897826794!5f3.325193203789971"
+              width="600"
+              height="450"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+
+            <a id="hu">
+              <h3>ハンガリーのドメイン .hu &#9660;</h3>
+            </a>
+
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!4v1719375866818!6m8!1m7!1sXxSEdW9wL8GVE-S4AecgXw!2m2!1d47.51073103927565!2d19.05552913567327!3f346.99576956464756!4f15.092207205285192!5f3.325064452047488"
+              width="600"
+              height="450"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+
+            <h3>シンガポールのドメイン .sg &#9660;</h3>
+
+            <a id="sg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!4v1719376207148!6m8!1m7!1sgN5eD5SVKb-emEFf2Y7iIQ!2m2!1d1.286096937054738!2d103.8450917461238!3f175.0815126858232!4f18.83202120617645!5f3.325193203789971"
+                width="600"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </a>
+          </a>
+          <a id="tips">
+            <h1 class="container">Tips</h1>
+          </a>
+
+          <p>他にも特定に役立つTipsをいくつか紹介していきます！</p>
+
+          <h3>太陽の方角</h3>
+          <img src="image/image7.png" id="img7" />
+
+          <p>
+            <strong>太陽の方角が北だと南半球</strong>になります。<br />
+            役立つ手がかりが何もない場合、太陽の向きを確認しておくとある程度絞れます。
+          </p>
+
+          <h3>カバレッジ</h3>
+          <img src="image/image8.svg" id="img8" />
+
+          <div
+            class="cover-list"
+            lang="ja"
+            style="
+              border: 1px solid #abd5f5;
+              background-color: #f1f5fc;
+              margin-top: 2px;
+              border-radius: 4px;
+              padding: 3px;
+            "
+            dir="ltr"
+          >
+            <div style="text-align: center"></div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #305ba3;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              利用可能な地域
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #7e98ce;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              一部利用可能な地域
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #ff7f27;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              サービス開始予定地（公式）
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #e9b96e;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              サービス開始予定地（非公式）
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #4e9a06;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              博物館のみ利用可能な地域
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #8acf45;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              Countries and dependencies with views of private businesses only
+            </div>
+            <div class="legend" style="direction: ltr; line-height: 23px">
+              <div
+                class="legend-content"
+                style="
+                  display: inline-block;
+                  vertical-align: top;
+                  box-sizing: border-box;
+                  width: 34px;
+                  height: 23px;
+                  overflow: hidden;
+                  font-size: 15px;
+                  border: thin solid #333;
+                  background: #e0e0e0;
+                  color: #202122;
+                  text-align: center;
+                "
+              >
+                &nbsp;
+              </div>
+              非公開地域
+            </div>
+          </div>
+          <p id="wikipedia">
+            引用：<a
+              href="https://ja.m.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:Google_Street_View_coverage.svg"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="syoukai"
+              >Wikipedia</a
+            >
+          </p>
+          <p>
+            Googleのストリートビューが対応していない国を覚えることで、特定がかなりスムーズになります。<br />
+            急に覚えるのは難しいのでやりながら覚えていきましょう！
+          </p>
+
+          <h3>Googleカー</h3>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!4v1719466276855!6m8!1m7!1s7bPGoq6R8LK1nTIruWJADg!2m2!1d18.45775560782349!2d-69.94773094609758!3f144.72592957520263!4f-73.59884896291442!5f1.4143075536436243"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <p>
+            いくつかの国ではストリートビューを撮影している車が特殊なことがあります。<br />
+            上の画像のように、ドミニカ共和国では滑車がついています。<br />
+          </p>
+
+          <a id="saigoni"><h1 class="container">最後に</h1></a>
+          <p id="bottom">
+            今回紹介してきた手がかりを全て比較しながら特定することが鍵になってきます。<br />
+            最初は何もわからないと思うので、<a
+              href="https://geohints.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="syoukai"
+              ><strong>GeoHints</strong></a
+            >などを活用しながら慣れましょう！<br /><br />
+            それでは良いGeoGuessrライフを！
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="fotter"></div>
+
+    <script>
+      //   $(function () {
+      //     $('a[href^="#"]').click(function () {
+      //       var adjust = -20;
+      //       var speed = 900;
+      //       var href = $(this).attr("href");
+      //       var target = $(href == "#" || href == "" ? "html" : href);
+      //       var position = target.offset().top + adjust;
+      //       $("body,html").animate({ scrollTop: position }, speed, "swing");
+      //       return false;
+      //     });
+      //   });
+      $(function () {
+        var time = 1200; // アニメーションの長さ
+        var offsetY = -50; // ヘッダー等の固定領域がある場合はその値
+
+        $("body").on("click", 'a[href^="#"]', function () {
+          var href;
+          href = $(this).attr("href");
+          if (href === "#") {
+            return;
+          }
+          $("html, body").animate(
+            {
+              scrollTop: $(href).offset().top + offsetY,
+            },
+            {
+              duration: time,
+              easing: "easeInOutExpo", // イージングの種類を指定
+            }
+          );
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>
